@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đường Lối Kháng Chiến Toàn Dân, Toàn Diện, Lâu Dài (1946-1954)</title>
+    
+    <!-- Nhúng Font chữ Vintage (Lora) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    
+    <!-- Nhúng thư viện model-viewer cho 3D -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+    <!-- Nhúng Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vintage: {
+                            bg: '#eaddcf',
+                            surface: '#fffdf5',
+                            text: '#3a2a18',
+                            subtext: '#6b5643',
+                            accent: '#9c3e21',
+                            accentHover: '#7a2f17'
+                        }
+                    },
+                    fontFamily: {
+                        // Ghi đè font mặc định thành font Lora phong cách cổ điển
+                        sans: ['"Lora"', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Thiết lập nền cơ bản */
+        body {
+            background-color: #eaddcf;
+            color: #3a2a18;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Container nền Vintage (Đã bỏ ảnh rời, dùng 100% CSS thuần) */
+        .bg-vintage-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-color: #eaddcf; /* Màu giấy cũ */
+            
+            /* Tạo viền tối nhẹ (vignette) hoàn toàn bằng CSS để không phẳng lì */
+            background-image: radial-gradient(circle at center, transparent 30%, rgba(58, 42, 24, 0.08) 120%);
+        }
+
+        /* Hiệu ứng Bump (Nảy) khi cuộn trang */
+        .reveal-bump {
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        
+        .reveal-bump.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Hiệu ứng trượt mở mượt mà cho phần chi tiết */
+        .details-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+        
+        .details-wrapper.is-open {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            margin-top: 1.5rem;
+        }
+
+        .details-inner {
+            overflow: hidden;
+        }
+
+        /* Gradient chữ kiểu cổ điển (vàng đồng / đỏ gạch) */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #9c3e21, #d67c41);
+        }
+
+        /* Tùy chỉnh cho Model Viewer */
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            outline: none;
+        }
+
+        /* Hiệu ứng Bump Ease-in-out cho khối 3D khi tương tác */
+        .hover-bump {
+            transition: transform 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+        }
+        .hover-bump:hover {
+            transform: scale(1.06) translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(58, 42, 24, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nền Vintage Cổ Điển -->
+    <div class="bg-vintage-texture"></div>
+
+    <!-- Header phong cách Vintage -->
+    <header class="py-24 text-center px-4 reveal-bump active">
+        <h2 class="text-vintage-subtext font-semibold tracking-widest uppercase text-sm mb-4">Lịch sử Đảng Cộng sản Việt Nam</h2>
+        <!-- Thêm thẻ <br> để ép cụm "Toàn Dân..." xuống dòng, giữ nguyên cụm từ không bị cắt xén -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 max-w-6xl mx-auto leading-tight text-vintage-text drop-shadow-sm">
+            Đường Lối Kháng Chiến<br>Toàn Dân, Toàn Diện, Lâu Dài
+        </h1>
+        <p class="text-xl md:text-2xl text-vintage-subtext italic font-medium max-w-3xl mx-auto">
+            (Giai đoạn 1946 – 1954)
+        </p>
+    </header>
+
+    <!-- PHẦN I: BỐI CẢNH & NỘI DUNG CỐT LÕI -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 reveal-bump">
+        <div class="flex flex-col gap-10">
+            
+            <!-- 1. Bối cảnh lịch sử -->
+            <div class="w-full">
+                <div class="bg-white rounded-[2rem] shadow-sm border border-black/5 p-8 md:p-10 hover:-translate-y-1 transition-all duration-300">
+                    <h2 class="text-3xl font-bold text-vintage-text mb-6">1. Bối cảnh lịch sử và sự bùng nổ của cuộc kháng chiến</h2>
+                    <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                        Sau thắng lợi của Cách mạng Tháng Tám năm 1945, nước Việt Nam Dân chủ Cộng hòa ra đời nhưng phải đối mặt với vô vàn khó khăn: kinh tế kiệt quệ, nạn đói, thù trong giặc ngoài và đặc biệt là âm mưu quay trở lại xâm lược của thực dân Pháp.
+                    </p>
+                    <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                        Mặc dù Chính phủ Việt Nam đã nhiều lần thể hiện thiện chí hòa bình và nhân nhượng, nhưng thực dân Pháp vẫn liên tiếp gây hấn:
+                    </p>
+                    <ul class="space-y-2 mb-6 ml-2">
+                        <li class="flex items-center text-vintage-subtext text-lg"><span class="w-2 h-2 rounded-full bg-vintage-accent mr-3"></span> Tấn công Hải Phòng, Lạng Sơn (1946)</li>
+                        <li class="flex items-center text-vintage-subtext text-lg"><span class="w-2 h-2 rounded-full bg-vintage-accent mr-3"></span> Khiêu khích quân sự tại Hà Nội</li>
+                        <li class="flex items-center text-vintage-subtext text-lg"><span class="w-2 h-2 rounded-full bg-vintage-accent mr-3"></span> Đưa tối hậu thư đòi tước vũ khí lực lượng tự vệ Việt Nam</li>
+                    </ul>
+                    <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                        Trước tình thế đó, ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi toàn quốc kháng chiến, khẳng định quyết tâm:
+                    </p>
+                    <blockquote class="border-l-4 border-vintage-accent pl-6 py-3 my-6 bg-vintage-accent/5 rounded-r-2xl italic text-xl text-vintage-text font-medium leading-relaxed">
+                        “Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ.”
+                    </blockquote>
+                    <p class="text-vintage-text text-lg font-medium leading-relaxed">
+                        Từ đây, cuộc kháng chiến chống thực dân Pháp chính thức bùng nổ, mở đầu cho một cuộc chiến đấu trường kỳ của dân tộc.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. Nội dung cốt lõi -->
+            <div class="w-full mt-6">
+                <!-- Viết đầy đủ toàn văn tiêu đề, không cắt chữ -->
+                <h2 class="text-3xl md:text-4xl font-bold text-vintage-text mb-8 px-2">2. Nội dung cốt lõi của đường lối kháng chiến toàn dân, toàn diện, lâu dài</h2>
+                <p class="text-vintage-subtext text-lg mb-8 px-2">Đảng Cộng sản Việt Nam đã đề ra đường lối kháng chiến mang tính chiến lược gồm bốn nội dung cơ bản:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 2.1 -->
+                    <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-12 h-12 bg-vintage-accent/10 text-vintage-accent border border-vintage-accent/20 rounded-full flex items-center justify-center mb-6 text-xl font-bold">2.1</div>
+                        <h3 class="text-2xl font-bold text-vintage-text mb-4">Kháng chiến toàn dân</h3>
+                        <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                            Nghĩa là mọi tầng lớp nhân dân đều tham gia kháng chiến, không phân biệt giai cấp, tôn giáo hay dân tộc. Lực lượng tham gia gồm: Quân đội nhân dân, dân quân du kích, công nhân, nông dân, trí thức, phụ nữ, thanh niên, học sinh.
+                        </p>
+                        <div class="bg-vintage-accent/5 p-4 rounded-2xl border border-vintage-accent/10 italic text-vintage-text font-medium mb-4">
+                            "Mỗi người dân là một chiến sĩ<br>
+                            Mỗi làng xã là một pháo đài<br>
+                            Mỗi đường phố là một mặt trận."
+                        </div>
+                        <p class="text-vintage-subtext text-base leading-relaxed">
+                            Nhờ vậy, sức mạnh kháng chiến không chỉ nằm ở quân đội mà nằm trong toàn xã hội.
+                        </p>
+                    </div>
+
+                    <!-- 2.2 -->
+                    <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-12 h-12 bg-vintage-accent/10 text-vintage-accent border border-vintage-accent/20 rounded-full flex items-center justify-center mb-6 text-xl font-bold">2.2</div>
+                        <h3 class="text-2xl font-bold text-vintage-text mb-4">Kháng chiến toàn diện</h3>
+                        <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                            Cuộc kháng chiến không chỉ diễn ra trên mặt trận quân sự mà còn trên tất cả các lĩnh vực của đời sống xã hội:
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start"><span class="text-vintage-accent font-bold mr-2 mt-0.5">▪</span> <span class="text-vintage-subtext"><b>Quân sự:</b> Chiến tranh du kích, các chiến dịch lớn (Việt Bắc 1947, Biên giới 1950).</span></li>
+                            <li class="flex items-start"><span class="text-vintage-accent font-bold mr-2 mt-0.5">▪</span> <span class="text-vintage-subtext"><b>Chính trị:</b> Xây dựng chính quyền cách mạng, đoàn kết toàn dân.</span></li>
+                            <li class="flex items-start"><span class="text-vintage-accent font-bold mr-2 mt-0.5">▪</span> <span class="text-vintage-subtext"><b>Kinh tế:</b> Tăng gia sản xuất, tự túc lương thực.</span></li>
+                            <li class="flex items-start"><span class="text-vintage-accent font-bold mr-2 mt-0.5">▪</span> <span class="text-vintage-subtext"><b>Văn hóa – Tư tưởng:</b> Bình dân học vụ, xây dựng văn hóa dân tộc.</span></li>
+                            <li class="flex items-start"><span class="text-vintage-accent font-bold mr-2 mt-0.5">▪</span> <span class="text-vintage-subtext"><b>Ngoại giao:</b> Tranh thủ sự ủng hộ quốc tế.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- 2.3 -->
+                    <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-12 h-12 bg-vintage-accent/10 text-vintage-accent border border-vintage-accent/20 rounded-full flex items-center justify-center mb-6 text-xl font-bold">2.3</div>
+                        <h3 class="text-2xl font-bold text-vintage-text mb-4">Kháng chiến lâu dài</h3>
+                        <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                            So với Pháp, Việt Nam yếu hơn về quân sự và kinh tế, vì vậy Đảng xác định chiến lược <b>Trường kỳ kháng chiến</b>.
+                        </p>
+                        <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                            <b>Ý nghĩa:</b> Lấy thời gian để chuyển hóa lực lượng, vừa chiến đấu vừa xây dựng lực lượng, từng bước thay đổi tương quan lực lượng. Thực tế chứng minh:
+                        </p>
+                        <ul class="space-y-2 text-vintage-subtext">
+                            <li><span class="font-semibold text-vintage-accent">1947:</span> Thắng lợi Việt Bắc</li>
+                            <li><span class="font-semibold text-vintage-accent">1950:</span> Chiến dịch Biên giới</li>
+                            <li><span class="font-semibold text-vintage-accent">1954:</span> Chiến thắng Điện Biên Phủ</li>
+                        </ul>
+                    </div>
+
+                    <!-- 2.4 -->
+                    <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-12 h-12 bg-vintage-accent/10 text-vintage-accent border border-vintage-accent/20 rounded-full flex items-center justify-center mb-6 text-xl font-bold">2.4</div>
+                        <h3 class="text-2xl font-bold text-vintage-text mb-4">Dựa vào sức mình là chính</h3>
+                        <p class="text-vintage-subtext text-lg leading-relaxed mb-4">
+                            Đường lối kháng chiến xác định nguồn sức mạnh quyết định của cuộc chiến là nhân dân Việt Nam. Các yếu tố của nội lực bao gồm:
+                        </p>
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="bg-white border border-black/5 rounded-2xl p-3 text-sm font-medium text-vintage-text text-center shadow-sm">Tinh thần yêu nước</div>
+                            <div class="bg-white border border-black/5 rounded-2xl p-3 text-sm font-medium text-vintage-text text-center shadow-sm">Đoàn kết dân tộc</div>
+                            <div class="bg-white border border-black/5 rounded-2xl p-3 text-sm font-medium text-vintage-text text-center shadow-sm">Hậu phương kháng chiến</div>
+                            <div class="bg-white border border-black/5 rounded-2xl p-3 text-sm font-medium text-vintage-text text-center shadow-sm">Lực lượng vũ trang</div>
+                        </div>
+                        <p class="text-vintage-subtext text-base leading-relaxed">
+                            Việt Nam vẫn luôn tranh thủ sự giúp đỡ quốc tế nhưng hoàn toàn không phụ thuộc vào bên ngoài.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- KHỐI MỚI: MÔ HÌNH TỔNG KẾT ĐƯỢC THÊM VÀO ĐÂY -->
+                <div class="w-full mt-12 reveal-bump">
+                    <div class="bg-white rounded-[2rem] shadow-sm border border-black/5 p-8 md:p-10 flex flex-col md:flex-row items-center gap-10 transition-all duration-300 hover:shadow-md">
+                        <div class="w-full md:w-1/3">
+                            <div class="mb-4 font-bold text-gradient text-xl font-sans tracking-wide leading-relaxed">
+                                TỔNG KẾT ĐƯỜNG LỐI KHÁNG CHIẾN TOÀN DÂN, TOÀN DIỆN, LÂU DÀI
+                            </div>
+                            <h3 class="text-3xl font-bold text-vintage-text mb-4">Mô hình biểu tượng</h3>
+                            <p class="text-vintage-subtext text-lg leading-relaxed">
+                                Tinh thần đoàn kết, ý chí kiên cường và đường lối đúng đắn đã hội tụ thành sức mạnh vô song, đưa cuộc kháng chiến trường kỳ đi từ thắng lợi này đến thắng lợi khác.
+                            </p>
+                        </div>
+                        <div class="w-full md:w-2/3 h-[350px]">
+                            <div class="w-full h-full bg-[#fbfaf8] rounded-3xl border border-black/5 relative overflow-hidden hover-bump cursor-grab active:cursor-grabbing">
+                                <div class="absolute inset-0 bg-gradient-to-br from-vintage-accent/5 to-transparent pointer-events-none"></div>
+                                <model-viewer 
+                                    src="https://raw.githubusercontent.com/ngwyren/3D-abc/main/1.glb" 
+                                    auto-rotate 
+                                    camera-controls 
+                                    disable-zoom
+                                    exposure="1.2"
+                                    shadow-intensity="1.5"
+                                    rotation-per-second="30deg"
+                                    class="relative z-10 w-full h-full drop-shadow-2xl">
+                                </model-viewer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- KẾT THÚC KHỐI MỚI -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PHẦN II: DÒNG THỜI GIAN (QUÁ TRÌNH THỰC HIỆN) -->
+    <main class="max-w-7xl mx-auto pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="mb-16 text-center reveal-bump">
+            <h2 class="text-3xl md:text-4xl font-bold text-vintage-text">Quá trình tổ chức & Đẩy mạnh kháng chiến</h2>
+            <div class="w-24 h-1 bg-vintage-accent mx-auto mt-6 rounded-full opacity-60"></div>
+        </div>
+        
+        <div id="history-list" class="space-y-16">
+            <!-- Nội dung render từ JS -->
+        </div>
+    </main>
+
+    <!-- PHẦN III: Ý NGHĨA & LIÊN HỆ THỰC TIỄN -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32 space-y-20 reveal-bump">
+        
+        <!-- 5. Ý nghĩa lịch sử -->
+        <div>
+            <!-- Viết đầy đủ toàn văn tiêu đề -->
+            <h2 class="text-3xl md:text-4xl font-bold text-vintage-text mb-8 text-center">5. Ý nghĩa lịch sử của đường lối kháng chiến toàn dân, toàn diện, lâu dài</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:shadow-md transition">
+                    <div class="text-4xl mb-4">🇻🇳</div>
+                    <h4 class="text-xl font-bold mb-3 text-vintage-text">1. Đảm bảo thắng lợi</h4>
+                    <p class="text-vintage-subtext leading-relaxed">Nhờ đường lối đúng đắn, Việt Nam từ một nước yếu, kinh tế kiệt quệ đã đánh bại hoàn toàn dã tâm xâm lược của thực dân Pháp.</p>
+                </div>
+                <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:shadow-md transition">
+                    <div class="text-4xl mb-4">🤝</div>
+                    <h4 class="text-xl font-bold mb-3 text-vintage-text">2. Phát huy sức mạnh dân tộc</h4>
+                    <p class="text-vintage-subtext leading-relaxed">Sức mạnh của toàn dân, tinh thần yêu nước và khối đại đoàn kết dân tộc đã trở thành nhân tố quyết định nhất cho mọi thắng lợi.</p>
+                </div>
+                <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:shadow-md transition">
+                    <div class="text-4xl mb-4">🌍</div>
+                    <h4 class="text-xl font-bold mb-3 text-vintage-text">3. Cổ vũ thế giới</h4>
+                    <p class="text-vintage-subtext leading-relaxed">Chiến thắng của Việt Nam đã góp phần vào phong trào giải phóng dân tộc, cổ vũ các nước thuộc địa đấu tranh giành độc lập.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Liên hệ thực tiễn -->
+        <div>
+            <h2 class="text-3xl font-bold text-vintage-text mb-8 text-center">6. Liên hệ thực tiễn hiện nay</h2>
+            <p class="text-center text-vintage-subtext text-lg mb-8 max-w-2xl mx-auto">Tinh thần của đường lối kháng chiến vẫn mang nguyên giá trị trong thời đại ngày nay, ứng dụng vào công cuộc xây dựng và bảo vệ Tổ quốc:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:shadow-md transition">
+                    <h4 class="text-xl font-bold mb-3 text-vintage-accent relative z-10">Trong xây dựng đất nước</h4>
+                    <ul class="space-y-2 text-vintage-text/80 font-medium relative z-10">
+                        <li>• Phát huy sức mạnh đoàn kết toàn dân.</li>
+                        <li>• Kết hợp sức mạnh dân tộc và thời đại.</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:shadow-md transition">
+                    <h4 class="text-xl font-bold mb-3 text-vintage-accent relative z-10">Trong bảo vệ Tổ quốc</h4>
+                    <ul class="space-y-2 text-vintage-text/80 font-medium relative z-10">
+                        <li>• Xây dựng nền quốc phòng toàn dân.</li>
+                        <li>• Chủ động bảo vệ độc lập, chủ quyền.</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-3xl shadow-sm border border-black/5 p-8 hover:shadow-md transition">
+                    <h4 class="text-xl font-bold mb-3 text-vintage-accent relative z-10">Trong phát triển kinh tế</h4>
+                    <ul class="space-y-2 text-vintage-text/80 font-medium relative z-10">
+                        <li>• Nâng cao tinh thần tự lực tự cường.</li>
+                        <li>• Phát huy tối đa nội lực quốc gia.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- NÚT GỌI TRỢ LÝ AI (FAB) -->
+    <button id="chat-fab" onclick="toggleChat()" class="fixed bottom-8 right-8 bg-vintage-accent text-white px-6 py-4 rounded-full shadow-2xl font-sans font-semibold text-lg hover:bg-vintage-accentHover hover:scale-105 active:scale-95 transition-all duration-300 z-50 flex items-center gap-2 border-2 border-white/20">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        Hỏi đáp lịch sử ✨
+    </button>
+
+    <!-- KHUNG CHAT AI -->
+    <div id="chat-window" class="fixed bottom-28 right-8 w-[22rem] sm:w-[24rem] h-[32rem] bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(58,42,24,0.3)] border border-black/10 z-50 flex flex-col transform origin-bottom-right scale-0 opacity-0 transition-all duration-300 pointer-events-none">
+        
+        <!-- Header Chat -->
+        <div class="bg-vintage-accent/10 p-5 rounded-t-3xl border-b border-black/5 flex justify-between items-center">
+            <div>
+                <h3 class="font-bold text-vintage-text text-lg flex items-center gap-2">Trợ lý Lịch sử AI ✨</h3>
+                <p class="text-xs text-vintage-subtext font-sans">Được cung cấp bởi Gemini</p>
+            </div>
+            <button onclick="toggleChat()" class="text-vintage-subtext hover:text-vintage-accent p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <!-- Nội dung tin nhắn -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 font-sans text-sm bg-[#fbfaf8]">
+            <div class="flex flex-col items-start">
+                <div class="bg-white border border-black/5 text-vintage-text p-3.5 rounded-2xl rounded-tl-sm shadow-sm max-w-[85%] leading-relaxed">
+                    Chào bạn! Tôi là Trợ lý lịch sử AI. Bạn có câu hỏi nào về các chiến dịch, nhân vật hay sự kiện trong giai đoạn 1946-1954 không?
+                </div>
+            </div>
+        </div>
+
+        <!-- Khung nhập liệu -->
+        <div class="p-4 bg-white rounded-b-3xl border-t border-black/5">
+            <form id="chat-form" class="flex gap-2" onsubmit="handleChatSubmit(event)">
+                <input type="text" id="chat-input" placeholder="Nhập câu hỏi của bạn..." class="flex-1 bg-[#fbfaf8] border border-black/10 rounded-full px-4 py-2.5 font-sans text-sm focus:outline-none focus:border-vintage-accent/50 focus:ring-1 focus:ring-vintage-accent/50 transition-all" autocomplete="off" required>
+                <button type="submit" id="chat-submit-btn" class="bg-vintage-accent text-white p-2.5 rounded-full hover:bg-vintage-accentHover transition-colors flex items-center justify-center min-w-[40px]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // API Key sẽ được môi trường tự động tiêm vào lúc chạy
+        const apiKey = ""; 
+
+        // Các biến UI Chat
+        const chatWindow = document.getElementById('chat-window');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSubmitBtn = document.getElementById('chat-submit-btn');
+        let isChatOpen = false;
+
+        // Bật/Tắt Chat Window
+        function toggleChat() {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatWindow.classList.remove('scale-0', 'opacity-0', 'pointer-events-none');
+                chatWindow.classList.add('scale-100', 'opacity-100');
+                chatInput.focus();
+            } else {
+                chatWindow.classList.add('scale-0', 'opacity-0', 'pointer-events-none');
+                chatWindow.classList.remove('scale-100', 'opacity-100');
+            }
+        }
+
+        // Thêm tin nhắn vào giao diện
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = sender === 'user' ? 'flex flex-col items-end' : 'flex flex-col items-start';
+            
+            const bubble = document.createElement('div');
+            bubble.className = sender === 'user' 
+                ? 'bg-vintage-accent text-white p-3.5 rounded-2xl rounded-tr-sm shadow-sm max-w-[85%] leading-relaxed'
+                : 'bg-white border border-black/5 text-vintage-text p-3.5 rounded-2xl rounded-tl-sm shadow-sm max-w-[85%] leading-relaxed';
+            
+            // Xử lý markdown in đậm cơ bản từ AI
+            bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            msgDiv.appendChild(bubble);
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Cuộn xuống cuối
+        }
+
+        // Hiện indicator đang tải
+        function showLoading() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'chat-loading';
+            loadingDiv.className = 'flex flex-col items-start';
+            loadingDiv.innerHTML = `
+                <div class="bg-white border border-black/5 text-vintage-text/60 p-3.5 rounded-2xl rounded-tl-sm shadow-sm flex gap-1 items-center h-10">
+                    <span class="w-1.5 h-1.5 bg-vintage-accent/50 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                    <span class="w-1.5 h-1.5 bg-vintage-accent/50 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                    <span class="w-1.5 h-1.5 bg-vintage-accent/50 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                </div>
+            `;
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeLoading() {
+            const loadingDiv = document.getElementById('chat-loading');
+            if (loadingDiv) loadingDiv.remove();
+        }
+
+        // Gọi API Gemini với cơ chế Retry (Exponential Backoff)
+        async function fetchGeminiResponse(prompt) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { 
+                    parts: [{ 
+                        text: "Bạn là một Trợ lý Lịch sử Việt Nam thông minh, thân thiện. Nhiệm vụ của bạn là giải đáp các thắc mắc của người dùng về giai đoạn kháng chiến chống Pháp (1946 - 1954). Hãy trả lời thật chính xác, ngắn gọn (dưới 4 câu nếu có thể), dễ hiểu và không dùng các từ ngữ quá phức tạp. Nếu người dùng hỏi ngoài lề lịch sử, hãy lịch sự từ chối và hướng họ về chủ đề kháng chiến." 
+                    }] 
+                }
+            };
+
+            const retries = 5;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Xin lỗi, tôi không thể tìm thấy câu trả lời lúc này.";
+                } catch (error) {
+                    if (i === retries - 1) {
+                        console.error('Gemini API Error:', error);
+                        return "Xin lỗi, hiện tại hệ thống đang quá tải. Bạn vui lòng thử lại sau giây lát nhé.";
+                    }
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        }
+
+        // Xử lý khi nhấn nút gửi
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            // Xóa input, vô hiệu hóa nút
+            chatInput.value = '';
+            chatInput.disabled = true;
+            chatSubmitBtn.disabled = true;
+            chatSubmitBtn.classList.add('opacity-50');
+
+            // Hiển thị tin nhắn người dùng
+            appendMessage(text, 'user');
+            
+            // Hiển thị đang tải
+            showLoading();
+
+            // Lấy phản hồi từ LLM
+            const aiResponse = await fetchGeminiResponse(text);
+
+            // Gỡ bỏ đang tải và hiển thị tin nhắn AI
+            removeLoading();
+            appendMessage(aiResponse, 'ai');
+
+            // Bật lại input
+            chatInput.disabled = false;
+            chatSubmitBtn.disabled = false;
+            chatSubmitBtn.classList.remove('opacity-50');
+            chatInput.focus();
+        }
+
+        // Dữ liệu dòng thời gian hiện tại
+        const historyData = [
+            { 
+                title: "3. Tổ chức & Xây dựng lực lượng", 
+                time: "(1947 - 1950)",
+                headline: "Sau khi toàn quốc kháng chiến bùng nổ, Đảng đã tổ chức và lãnh đạo kháng chiến trên nhiều lĩnh vực.",
+                detail: `<ul class="space-y-2 ml-4 list-disc text-vintage-text">
+                            <li><b>Xây dựng lực lượng:</b> Bộ đội chính quy (hơn 12 vạn quân), Dân quân du kích (hơn 1 triệu người).</li>
+                            <li>Hệ thống căn cứ kháng chiến được hình thành vững chắc.</li>
+                         </ul>`
+            },
+            { 
+                title: "Chiến dịch Việt Bắc", 
+                time: "(1947)",
+                headline: "Pháp tấn công căn cứ địa Việt Bắc nhằm tiêu diệt cơ quan đầu não kháng chiến.",
+                detail: `<p class="mb-2"><b>Kết quả thắng lợi:</b></p>
+                         <ul class="space-y-2 ml-4 list-disc text-vintage-text">
+                            <li>Ta đánh bại hoàn toàn kế hoạch “đánh nhanh thắng nhanh” của địch.</li>
+                            <li>Bảo vệ an toàn được căn cứ địa cách mạng.</li>
+                         </ul>` 
+            },
+            { 
+                title: "Chiến dịch Biên giới", 
+                time: "(1950)",
+                headline: "Mở thông đường biên giới Việt – Trung, nhận viện trợ quốc tế, tiêu diệt một bộ phận quân Pháp.",
+                detail: `<p class="mb-2"><b>Kết quả thắng lợi:</b></p>
+                         <ul class="space-y-2 ml-4 list-disc text-vintage-text">
+                            <li>Giải phóng nhiều vùng biên giới rộng lớn.</li>
+                            <li>Tạo ra bước ngoặt chiến lược của cuộc kháng chiến, ta giành thế chủ động.</li>
+                         </ul>` 
+            },
+            { 
+                title: "4. Đại hội Đảng lần II", 
+                time: "(1951)",
+                headline: "Giai đoạn 1951 – 1954 là thời kỳ đẩy mạnh và kháng chiến phát triển mạnh mẽ.",
+                detail: `<p class="mb-2"><b>Nội dung Đại hội:</b></p>
+                         <ul class="space-y-2 ml-4 list-disc text-vintage-text">
+                            <li>Đại hội xác định Đường lối cách mạng dân tộc dân chủ nhân dân.</li>
+                            <li>Xác định mục tiêu: Độc lập dân tộc phải gắn liền với chủ nghĩa xã hội.</li>
+                         </ul>` 
+            },
+            { 
+                title: "Chiến thắng Điện Biên Phủ", 
+                time: "(1954)",
+                headline: "Sau 56 ngày đêm chiến đấu gian khổ, quân ta tiêu diệt toàn bộ tập đoàn cứ điểm.",
+                detail: `<ul class="space-y-2 ml-4 list-disc text-vintage-text">
+                            <li>Bắt sống tướng De Castries và toàn bộ ban tham mưu địch.</li>
+                            <li><b>Ý nghĩa lịch sử:</b> Chấm dứt ách thống trị của thực dân Pháp, mở ra phong trào giải phóng dân tộc trên toàn thế giới.</li>
+                         </ul>` 
+            },
+            { 
+                title: "Hiệp định Giơ-ne-vơ", 
+                time: "(21/7/1954)",
+                headline: "Đánh dấu thắng lợi hoàn toàn của cuộc kháng chiến chống thực dân Pháp.",
+                detail: `<ul class="space-y-2 ml-4 list-disc text-vintage-text">
+                            <li>Pháp buộc phải công nhận độc lập, chủ quyền, thống nhất và toàn vẹn lãnh thổ của Việt Nam.</li>
+                            <li>Chấm dứt chiến tranh, lập lại hòa bình ở Đông Dương. Miền Bắc hoàn toàn giải phóng.</li>
+                         </ul>` 
+            }
+        ];
+
+        const container = document.getElementById('history-list');
+
+        window.toggleDetail = function(index) {
+            const detailWrapper = document.getElementById(`detail-${index}`);
+            const btnText = document.getElementById(`btn-text-${index}`);
+            const icon = document.getElementById(`btn-icon-${index}`);
+            
+            if (detailWrapper.classList.contains('is-open')) {
+                detailWrapper.classList.remove('is-open');
+                btnText.innerText = "Xem chi tiết";
+                icon.style.transform = "rotate(0deg)";
+            } else {
+                detailWrapper.classList.add('is-open');
+                btnText.innerText = "Thu gọn";
+                icon.style.transform = "rotate(180deg)";
+            }
+        };
+
+        historyData.forEach((item, index) => {
+            const isEven = index % 2 === 0;
+            const layoutClass = isEven ? 'md:flex-row' : 'md:flex-row-reverse';
+            const textPadding = isEven ? 'md:pr-10 md:pl-0' : 'md:pl-10 md:pr-0';
+            
+            // Đã đổi sang định dạng Raw GitHub thay vì CDN jsDelivr
+            // Link raw sẽ lấy bản cập nhật tức thì, bỏ qua bộ nhớ đệm (cache)
+            // LƯU Ý: Đang để nhánh "main". Nếu Github của bạn dùng "master", hãy đổi chữ main thành master ở dòng dưới.
+            const modelSrc = `https://raw.githubusercontent.com/ngwyren/3D-abc/main/${index + 1}.glb`;
+
+            const itemHTML = `
+                <div class="flex flex-col ${layoutClass} items-center gap-12 group reveal-bump max-w-6xl mx-auto">
+                    
+                    <!-- Khối Nội Dung Text -->
+                    <div class="w-full md:w-1/2 ${textPadding}">
+                        <div class="w-full bg-white rounded-[2rem] shadow-sm border border-black/5 p-8 md:p-10 transition-all duration-300">
+                            <div class="mb-4 font-bold text-gradient text-xl font-sans tracking-wide">
+                                PHẦN ${index + 1}: ${index === 0 || index === 3 ? "GIAI ĐOẠN BẢN LỀ" : "CHIẾN DỊCH TIÊU BIỂU"}
+                            </div>
+                            <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-vintage-text flex flex-wrap items-baseline gap-x-3">
+                                <span>${item.title}</span>
+                                ${item.time ? `<span class="whitespace-nowrap text-2xl md:text-3xl text-vintage-subtext font-medium italic">${item.time}</span>` : ''}
+                            </h2>
+                            
+                            <p class="text-xl text-vintage-subtext font-medium leading-relaxed">
+                                ${item.headline}
+                            </p>
+
+                            <div id="detail-${index}" class="details-wrapper">
+                                <div class="details-inner">
+                                    <div class="text-lg text-vintage-text leading-relaxed bg-[#fbfaf8] p-6 rounded-3xl mt-4 shadow-inner border border-black/5">
+                                        ${item.detail}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onclick="toggleDetail(${index})" class="mt-8 flex items-center gap-2 bg-vintage-text text-vintage-surface px-6 py-3 rounded-full font-sans font-semibold tracking-wide hover:bg-vintage-accent hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg shadow-black/10">
+                                <span id="btn-text-${index}">Xem chi tiết</span>
+                                <svg id="btn-icon-${index}" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Khối 3D Model Tương Tác -->
+                    <div class="w-full md:w-1/2">
+                        <div class="bg-white rounded-[2rem] shadow-sm border border-black/5 p-4 aspect-square flex items-center justify-center relative overflow-hidden hover-bump cursor-grab active:cursor-grabbing">
+                            <div class="absolute inset-0 bg-gradient-to-br from-vintage-accent/5 to-transparent pointer-events-none"></div>
+                            <model-viewer 
+                                src="${modelSrc}" 
+                                auto-rotate 
+                                camera-controls 
+                                disable-zoom
+                                exposure="1.2"
+                                shadow-intensity="1.5"
+                                rotation-per-second="30deg"
+                                class="relative z-10 w-full h-full drop-shadow-2xl">
+                            </model-viewer>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+            container.innerHTML += itemHTML;
+        });
+
+        // Khởi tạo Intersection Observer cho hiệu ứng cuộn trang
+        const initObserver = () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-bump').forEach(el => {
+                observer.observe(el);
+            });
+        };
+
+        initObserver();
+    </script>
+</body>
+</html>
